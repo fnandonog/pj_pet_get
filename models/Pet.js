@@ -39,4 +39,8 @@ const Pet = conn.define('pets', {
 User.hasMany(Pet, { onDelete: 'CASCADE' })
 Pet.belongsTo(User)
 
+//o pet tambem pode ter um adotante (quem agendou a visita)
+//isso cria a coluna adopterId na tabela pets
+Pet.belongsTo(User, { as: 'adopter', foreignKey: 'adopterId' })
+
 module.exports = Pet

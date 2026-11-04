@@ -19,6 +19,7 @@ const petRoutes = require('./routes/petRoutes')
 api.use(express.json())
 
 //salve cors
+//libera o front-end (roda na porta 3000)
 api.use(cors({ credentials: true, origin: 'http://localhost:3000' }))
 
 //rotas da api

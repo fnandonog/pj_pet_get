@@ -121,7 +121,7 @@ module.exports = class UserController {
     //editar o usuario
     static async editUser(req, res) {
         const id = req.params.id
-        const { name, email, phone, password } = req.body
+        const { name, email, phone, password, image } = req.body
 
         //pegar o usuario que esta logado
         const token = getToken(req)
@@ -152,7 +152,8 @@ module.exports = class UserController {
         const dadosAtualizados = {
             name: name,
             email: email,
-            phone: phone
+            phone: phone,
+            image: image
         }
 
         //so troca a senha se mandou uma nova

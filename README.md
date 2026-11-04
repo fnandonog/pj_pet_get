@@ -3,17 +3,27 @@
 API de adoção de pets feita em Node.js com Express, Sequelize e MySQL.
 O usuário se cadastra, faz login e pode cadastrar pets para adoção.
 
-## O que já foi feito (50%)
+## O que tem na API
 
 - Cadastro de usuário com validação e senha criptografada (bcrypt)
 - Login com token JWT (vale 1 dia)
 - Rotas protegidas por token (middleware verifyToken)
 - Ver, listar, editar e apagar usuário (só pode mexer no próprio perfil)
-- CRUD de pets: cadastrar, listar, ver um, editar e remover (só o dono pode editar e remover)
+- CRUD de pets: cadastrar, listar, ver um, editar e remover
+- Adoção: agendar visita, ver minhas adoções e concluir adoção
 - Validação dos dados com express-validator
 - Dados do banco e chave do token no arquivo .env
 
-Falta fazer: upload de imagem, agendar visita e concluir adoção.
+## Regras de negócio
+
+- Ninguém altera dados de outro usuário (403)
+- Só o dono edita ou remove o pet (403)
+- Não dá para agendar visita no próprio pet (422)
+- Só uma pessoa agenda visita por pet (422)
+- Só o dono conclui a adoção, e só se alguém agendou visita (403 / 422)
+- Pet adotado não pode ser editado nem receber visita (422)
+- O "available" do pet só muda quando conclui a adoção (não dá para mandar pelo body)
+- E-mail não pode repetir e a senha nunca volta nas respostas
 
 ## Como rodar
 
@@ -63,6 +73,9 @@ Exemplo de cadastro:
 | GET | /pets/:id | ver um pet |
 | PATCH | /pets/:id 🔒 | editar pet (só o dono) |
 | DELETE | /pets/:id 🔒 | remover pet (só o dono) |
+| GET | /pets/myadoptions 🔒 | pets em que eu agendei visita |
+| PATCH | /pets/schedule/:id 🔒 | agendar visita (devolve o telefone do dono) |
+| PATCH | /pets/conclude/:id 🔒 | concluir adoção (só o dono) |
 
 Exemplo de cadastro de pet:
 
